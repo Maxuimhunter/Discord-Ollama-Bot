@@ -1,107 +1,183 @@
-# Discord Ollama Bot
+# 🤖 Discord Ollama Bot
 
-A Discord bot that integrates with Ollama to provide AI-powered chat capabilities. This bot can be used to interact with various language models hosted on an Ollama instance directly from Discord.
+Welcome to the Discord Ollama Bot! This bot brings the power of Ollama's language models directly into your Discord server, allowing you to have AI-powered conversations with just a mention.
 
-## Features
+## ✨ Features
 
-- Seamless integration with Ollama's API
-- Support for multiple AI models (default: gemma3)
-- Simple mention-based interaction
-- Admin commands for model management
-- Typing indicators for better user experience
-- Environment-based configuration
+- **AI-Powered Chat**: Have natural conversations with various language models
+- **Multiple Model Support**: Easily switch between different Ollama models
+- **User-Friendly**: Simple mention-based interaction - just @ the bot and type your message
+- **Admin Controls**: Special commands for server administrators
+- **Real-time Feedback**: Typing indicators show when the bot is generating a response
+- **Customizable**: Configure settings through environment variables
 
-## Prerequisites
+## 🚀 Quick Start Guide
 
-Before you begin, ensure you have the following:
+### Prerequisites
 
-1. Python 3.8 or higher
-2. An Ollama server running (default: http://localhost:11434)
-3. A Discord bot token
-4. Required Python packages (see Installation)
+Before we begin, make sure you have:
 
-## Installation
+1. **Python 3.8 or higher**
+   - [Download Python](https://www.python.org/downloads/)
+   - Verify installation: `python --version`
 
-1. Clone this repository or download the source code
-2. Install the required Python packages:
+2. **Ollama Server**
+   - [Install Ollama](https://ollama.ai/)
+   - Start the server: `ollama serve` (keep this running in a separate terminal)
+   - Pull a model: `ollama pull gemma3`
+
+3. **Discord Bot Token**
+   - We'll create this in the setup steps below
+
+## 🛠 Installation
+
+### Step 1: Get the Code
+
+```bash
+# Clone this repository
+git clone https://github.com/yourusername/discord-ollama-bot.git
+cd discord-ollama-bot
+```
+
+### Step 2: Set Up Python Environment
+
+```bash
+# Create a virtual environment (recommended)
+python -m venv venv
+
+# Activate the virtual environment
+# On Windows:
+.\venv\Scripts\activate
+# On macOS/Linux:
+source venv/bin/activate
+
+# Install required packages
+pip install -r requirements.txt
+```
+
+### Step 3: Configure Your Bot
+
+1. **Create a Discord Bot**
+   - Go to [Discord Developer Portal](https://discord.com/developers/applications)
+   - Click "New Application" and name it (e.g., "Ollama Bot")
+   - Navigate to "Bot" in the left sidebar
+   - Click "Add Bot" and confirm
+   - Under "TOKEN", click "Copy" - this is your `DISCORD_TOKEN`
+   
+2. **Set Up Permissions**
+   - Go to "OAuth2" > "URL Generator"
+   - Check `bot` and `applications.commands` in Scopes
+   - In Bot Permissions, enable:
+     - Read Messages/View Channels
+     - Send Messages
+     - Read Message History
+     - Use External Emojis
+     - Add Reactions
+   - Copy the generated URL and open it in your browser
+   - Select your server and authorize the bot
+
+3. **Configure Environment**
+   - Create a new file named `.env` in the project directory
+   - Add the following content:
+     ```
+     # Your Discord bot token from the Developer Portal
+     DISCORD_TOKEN=your_discord_bot_token_here
+     
+     # Ollama server URL (default is usually fine)
+     OLLAMA_BASE_URL=http://localhost:11434
+     
+     # Default model to use (must be installed in Ollama)
+     OLLAMA_MODEL=gemma3
+     ```
+   - Replace `your_discord_bot_token_here` with the token you copied earlier
+
+## 🚀 Running the Bot
+
+1. **Start Ollama Server** (if not already running)
    ```bash
-   pip install discord.py python-dotenv aiohttp
+   # In a new terminal window
+   ollama serve
    ```
-3. Create a `.env` file in the project directory with the following content:
-   ```
-   DISCORD_TOKEN=your_discord_bot_token_here
-   OLLAMA_BASE_URL=http://localhost:11434  # Change if your Ollama is running elsewhere
-   OLLAMA_MODEL=gemma3  # Default model to use
-   ```
-   Replace `your_discord_bot_token_here` with your actual Discord bot token.
 
-## Running the Bot
-
-1. Ensure your Ollama server is running
-2. Run the bot using Python:
+2. **Start the Discord Bot**
    ```bash
+   # Make sure your virtual environment is activated
    python discord_ollama_bot.py
    ```
-3. The bot should now be online in your Discord server
 
-## Usage
+3. **Verify the Bot is Online**
+   - Check your Discord server - the bot should appear online
+   - Try mentioning the bot in any channel: `@BotName Hello!`
 
-### Basic Usage
-- Mention the bot in any channel it has access to, followed by your message:
+## 🤖 Using the Bot
+
+### Basic Commands
+- **Chat with the bot**: Just mention it in any channel
   ```
-  @BotName Hello, how are you?
+  @BotName What's the weather like today?
   ```
-- The bot will respond to your message in the same channel
 
-### Available Commands
-- `!ping` - Check if the bot is responsive
-- `!setmodel <model_name>` (Admin only) - Change the Ollama model being used
+### Admin Commands
+- `!ping` - Check if the bot is responding
+- `!setmodel <model_name>` - Change the Ollama model (admin only)
+  Example: `!setmodel llama2`
 
-## Integration with a Discord Bot
+## ⚙️ Configuration Options
 
-### Creating a Discord Bot
-1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
-2. Click on "New Application" and give it a name
-3. Navigate to the "Bot" tab and click "Add Bot"
-4. Under the Bot tab, copy the token (this is your `DISCORD_TOKEN`)
-5. Under OAuth2 > URL Generator, select `bot` and `applications.commands` scopes
-6. Under Bot Permissions, select:
-   - Send Messages
-   - Read Messages/View Channels
-   - Use External Emojis
-   - Add Reactions
-   - Use Slash Commands
-7. Use the generated URL to add the bot to your server
+Edit the `.env` file to customize:
 
-### Adding the Bot to Your Server
-1. Use the OAuth2 URL generated in the previous step
-2. Select the server you want to add the bot to
-3. Authorize the bot with the selected permissions
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DISCORD_TOKEN` | Your bot's secret token | (required) |
+| `OLLAMA_BASE_URL` | URL of your Ollama server | `http://localhost:11434` |
+| `OLLAMA_MODEL` | Default model to use | `gemma3` |
 
-## Configuration
+## 🔍 Troubleshooting
 
-You can customize the bot's behavior by modifying the following environment variables in your `.env` file:
+### Bot Not Responding?
+1. **Check Bot Status**
+   - Is the bot script running without errors?
+   - Is the bot online in your server?
+   
+2. **Verify Permissions**
+   - Does the bot have permission to read/send messages in the channel?
+   - Is the bot mentioned correctly? Try copying the mention from Discord's user list
 
-- `DISCORD_TOKEN`: Your Discord bot token (required)
-- `OLLAMA_BASE_URL`: URL of your Ollama server (default: http://localhost:11434)
-- `OLLAMA_MODEL`: Default model to use (default: gemma3)
+3. **Ollama Connection Issues**
+   - Is Ollama server running? Try `curl http://localhost:11434/api/tags`
+   - Is the model downloaded? Run `ollama list` to check
+   - Check the bot's console for error messages
 
-## Troubleshooting
+### Common Errors
+- **"Invalid token"**: Double-check your `DISCORD_TOKEN` in `.env`
+- **"Connection refused"**: Make sure Ollama server is running
+- **"Model not found"**: The specified model isn't installed. Try `ollama pull gemma3`
 
-- **Bot not responding**:
-  - Check if the bot is running
-  - Verify the bot has the correct permissions in the channel
-  - Ensure the bot is mentioned correctly
+## 🔒 Security Best Practices
 
-- **Ollama connection issues**:
-  - Verify Ollama server is running and accessible
-  - Check the `OLLAMA_BASE_URL` in your `.env` file
-  - Ensure the specified model is available on your Ollama instance
+1. **Never share your bot token**
+   - The `.env` file is automatically ignored by Git
+   - If you accidentally commit it, rotate the token immediately
 
-## Security Note
+2. **Bot Permissions**
+   - Only grant necessary permissions
+   - Consider creating a separate Discord server for testing
 
-Keep your `.env` file secure and never commit it to version control. The `.env` file is included in `.gitignore` by default.
+3. **Regular Updates**
+   - Keep your dependencies updated:
+     ```bash
+     pip install --upgrade -r requirements.txt
+     ```
 
-## License
+## 🤝 Contributing
 
-This project is open source and available under the [MIT License](LICENSE).
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Ollama](https://ollama.ai/) for the powerful language models
+- [discord.py](https://discordpy.readthedocs.io/) for the Discord API wrapper
